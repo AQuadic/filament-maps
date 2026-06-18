@@ -94,26 +94,6 @@ public function setUp(): void
 
 > The `setUp` method is called on `mount` of the widget. See [livewire lifecycle hooks](https://laravel-livewire.com/docs/2.x/lifecycle-hooks) for more information.
 
-### Global Configuration
-
-If you want to set a default configuration for all instances of the map widget, you can use the `configureUsing` method in a service provider:
-
-```php
-MyMap::configureUsing(function (ResellerMap $widget) {
-    $widget->mapMarkers([
-        Marker::make('id')
-            ->lat(51.505)
-            ->lng(-0.09)
-            ->popup('I am a popup')
-            ->tooltip('I am a tooltip'),
-    ])
-    ->tileLayerUrl('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png')
-    ->tileLayerOptions([
-        'attribution' => 'Map data © <a href="https://openstreetmap.org">OpenStreetMap</a> contributors',
-    ])
-});
-```
-
 ## Tile Layers
 
 The map uses OpenStreetMap tiles by default, but you can change it to use any other provider using `$tileLayerUrl` property or `tileLayerUrl` method. It's recommended to also use the `tileLayerOptions` to set correct attributions.
@@ -566,24 +546,6 @@ $livewire->addCircle(Circle::make('circle-name')->lat(...)->lng(...)->options([.
 $livewire->removeCircle('circle-name');
 $livewire->updateCircle(Circle::make('circle-name')->lat(...)->lng(...)->options([...]));
 ```
-
-### Update Map / Polling
-
-set pollingInterval to anything you like inside your widget:
-```php
-    protected static ?string $pollingInterval = '10s';
-```
-
-then inside your widget declare public function named updateMap, and add any logic you wish inside it
-
-```php
-    public function updateMap(): void
-    {
-        // for example this clears markers, you can add markers, polygon ..etc
-        $this->mapMarkers([]);
-    }
-```
-
 ## Images
 
 ![Header & Footer](https://raw.githubusercontent.com/webbingbrasil/filament-maps/main/docs/images/image-header-footer.png)

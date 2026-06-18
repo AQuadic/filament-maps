@@ -30,14 +30,13 @@ abstract class MapWidget extends Widget implements HasForms, HasActions
     use Concerns\HasPolygones;
     use Concerns\HasRectangles;
     use Concerns\HasCircles;
+    use CanPoll;
 
     use Configurable {
         configure as protected configureWidget;
     }
 
-    protected static string $view = 'filament-maps::widgets.map';
-
-    protected static ?string $pollingInterval = null;
+    protected string $view = 'filament-maps::widgets.map';
 
     protected string $height = '400px';
 
@@ -60,23 +59,16 @@ abstract class MapWidget extends Widget implements HasForms, HasActions
 
     public function configure(): static
     {
-        return $this
+        $this
             ->configureMarkers()
             ->configurePolylines()
             ->configurePolygones()
             ->configureRectangles()
             ->configureCircles();
-//            ->configureWidget();
-    }
 
-    protected function getPollingInterval(): ?string
-    {
-        return static::$pollingInterval;
-    }
+        $this->setUp();
 
-    public function updateMap(): void
-    {
-        // Add Code you want to update map with.
+        return $this;
     }
 
     public function height(string $height): self
@@ -136,7 +128,7 @@ abstract class MapWidget extends Widget implements HasForms, HasActions
 
     public function getRounded(): bool
     {
-        return $this->rounded;
+        return $this->rounded && $this->getHasBorder();
     }
 
     public function isFullPage(): bool
